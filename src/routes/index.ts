@@ -1,5 +1,5 @@
 import { Router } from "express";
-import protocolRoutes from "./protocol.routes.js";
+import protocolRoutes from "./protocol.routes";
 
 const router = Router();
 

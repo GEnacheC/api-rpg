@@ -2,8 +2,7 @@
   "name": "api-rpg",
   "version": "1.0.0",
   "description": "A API used for a RPG campaign",
-  "main": "src/server.ts",
-  "type": "module",
+  "main": "index.js",
   "scripts": {
     "dev": "tsx watch src/server.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -17,6 +16,7 @@
   "bugs": {
     "url": "https://github.com/GEnacheC/api-rpg/issues"
   },
+  "type": "module",
   "homepage": "https://github.com/GEnacheC/api-rpg#readme",
   "dependencies": {
     "@prisma/adapter-pg": "^7.2.0",

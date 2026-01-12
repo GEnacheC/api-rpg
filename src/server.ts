@@ -1,5 +1,5 @@
-import express, { type Request, type Response } from 'express';
-import router from './routes/index.ts';
+import express from 'express';
+import router from './routes/index';
 
 const app = express();
 const port = 3000;

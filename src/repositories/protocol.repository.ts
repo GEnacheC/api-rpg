@@ -1,4 +1,4 @@
-import prisma from "../database/prisma.js";
+import { prisma } from "../database/prisma";
 
 export default class ProtocolRepository {
     public static async createProtocol() {

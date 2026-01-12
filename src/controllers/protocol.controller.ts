@@ -1,5 +1,5 @@
 import { type Response } from 'express';
-import ProtocolService from '../services/protocol.service.js';
+import ProtocolService from '../services/protocol.service';
 
 
 export default class ProtocolController {

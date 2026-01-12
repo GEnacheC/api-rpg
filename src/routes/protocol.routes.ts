@@ -1,5 +1,5 @@
 import { Router } from "express";
-import ProtocolController from "../controllers/protocol.controller.js";
+import ProtocolController from "../controllers/protocol.controller";
 
 const router = Router();
 
