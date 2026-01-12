@@ -4,7 +4,7 @@ import ProtocolService from '../services/protocol.service';
 
 export default class ProtocolController {
     public static async createProtocol(res: Response) {
-        const protocol = await ProtocolService.createProtocol();
+        await ProtocolService.createProtocol();
 
         // try/catch?
         res.status(201).json({ message: "Protocol created successfully!" });

@@ -2,7 +2,7 @@ import { prisma } from "../database/prisma";
 
 export default class ProtocolRepository {
     public static async createProtocol() {
-        const p = await prisma.protocol.create({});
-        return p;
+        const protocol = await prisma.protocol.create({});
+        return protocol;
     };
 };
