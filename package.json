@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "A API used for a RPG campaign",
   "main": "src/server.ts",
+  "type": "module",
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -18,24 +19,20 @@
   },
   "homepage": "https://github.com/GEnacheC/api-rpg#readme",
   "dependencies": {
+    "@prisma/adapter-pg": "^7.2.0",
     "@prisma/client": "^7.2.0",
     "cors": "^2.8.5",
-    "express": "^5.2.1"
+    "express": "^5.2.1",
+    "pg": "^8.16.3"
   },
   "devDependencies": {
     "@types/express": "^5.0.6",
     "@types/node": "^25.0.6",
+    "@types/pg": "^8.16.0",
+    "dotenv": "^17.2.3",
     "node-ts": "^8.0.10",
     "prisma": "^7.2.0",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.9.3"
-  },
-  "compilerOptions": {
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
-    "target": "ES2020",
-    "outDir": "dist",
-    "esModuleInterop": true,
-    "strict": true
   }
 }
