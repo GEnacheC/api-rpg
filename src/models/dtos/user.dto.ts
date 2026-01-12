@@ -1,3 +1,5 @@
+import md5 from "md5";
+
 export default class UserDto {
     private username: string;
     private password: string;
@@ -5,7 +7,7 @@ export default class UserDto {
 
     constructor(username: string, password: string, protocol: string) {
         this.username = username;
-        this.password = password;
+        this.password = md5(password);
         this.protocol = protocol;
     }
 

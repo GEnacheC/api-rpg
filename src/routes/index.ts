@@ -1,14 +1,17 @@
 import { Router } from "express";
 import protocolRoutes from "./protocol.routes";
 import UserController from "../controllers/user.controller";
+import basicAuth from "../middlewares/basicauth.middleware";
+import bearerAuth from "../middlewares/bearerauth.middleware";
 
 const router = Router();
 
 // rotas agrupadas
-router.use("/protocols", protocolRoutes);
-router.use("/users", protocolRoutes);
+router.use("/protocols", bearerAuth(), protocolRoutes);
+router.use("/users", bearerAuth(), protocolRoutes);
 
-router.post("/signup", UserController.createUser);
+router.post("/signup", basicAuth(), UserController.createUser);
+router.post("/signin", basicAuth(), UserController.loginUser);
 
 // rota simples de teste
 router.get("/", (_, res) => {

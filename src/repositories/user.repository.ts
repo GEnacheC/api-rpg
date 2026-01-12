@@ -12,4 +12,13 @@ export default class UserRepository {
         });
         return user;
     }
+
+    public static async getUserByUsername(username: string) {
+        const user = await prisma.user.findFirst({
+            where: {
+                username: username
+            }
+        })
+        return user;
+    }
 }
