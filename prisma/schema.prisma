@@ -32,14 +32,16 @@ model Protocol {
 }
 
 model Character {
-  id            String @id @default(uuid()) @db.Uuid
-  name          String @db.VarChar(80)
-  surname       String @db.VarChar(255)
-  xp            Int
-  user          User   @relation(fields: [userId], references: [id])
-  userId        String @unique @db.Uuid
-  background    String
-  campaigns     CampaignCharacter[]
+  id              String @id @default(uuid()) @db.Uuid
+  name            String @db.VarChar(80)
+  surname         String @db.VarChar(255)
+  xp              Int
+  user            User   @relation(fields: [userId], references: [id])
+  userId          String @unique @db.Uuid
+  background      String
+  campaigns       CampaignCharacter[]
+  baseAttributes  CharacterBaseAttributes[]
+  attributes      CharacterAttributes[]
 }
 
 model Campaign {
@@ -64,4 +66,32 @@ model CampaignCharacter {
   finalDesc   String
 
   @@id([charId, campaignId])
+}
+
+model Attributes {
+  id              String @id @default(uuid()) @db.Uuid
+  name            String @db.VarChar(80)
+  description     String
+  baseAttributes  CharacterBaseAttributes[]
+  attributes      CharacterAttributes[]
+}
+
+model CharacterBaseAttributes {
+  character   Character   @relation(fields: [charId], references: [id])
+  charId      String      @db.Uuid
+  attributes  Attributes  @relation(fields: [attrId], references: [id])
+  attrId      String      @db.Uuid
+  value       Int
+
+  @@id([charId, attrId])
+}
+
+model CharacterAttributes {
+  character   Character   @relation(fields: [charId], references: [id])
+  charId      String      @db.Uuid
+  attributes  Attributes  @relation(fields: [attrId], references: [id])
+  attrId      String      @db.Uuid
+  value       Int
+
+  @@id([charId, attrId])
 }
