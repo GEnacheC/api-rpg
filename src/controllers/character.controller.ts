@@ -3,6 +3,21 @@ import CharacterDto from "../models/dtos/character.dto";
 import CharacterService from "../services/character.service";
 
 export default class CharacterController {
+    public static async getCharacters(req: Request, res: Response) {
+        const queryParams = {
+            page: Number(req.query.page ?? 1),
+            limit: Number(req.query.limit ?? 10),
+            search: req.query.search as string | undefined,
+        }
+
+        if (queryParams.page <= 0 || queryParams.limit <= 0) {
+            return res.status(400).json({ error: "Parâmetros inválidos" });
+        }
+
+        const users = await CharacterService.listCharacters(queryParams);
+        return res.json(users);
+    }
+
     public static async createCharacter(req: Request, res: Response) {
         const userId = (req as any).user.userId;
         if (!req.body) {
