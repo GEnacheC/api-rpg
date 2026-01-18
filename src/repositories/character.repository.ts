@@ -12,6 +12,26 @@ export default class CharacterRepository {
                 name: true,
                 surname: true,
                 background: true,
+                attributes: {
+                select: {
+                    value: true,
+                    attributes: {
+                        select: {
+                            name: true,
+                            description: true,
+                        }
+                    }
+                }},
+                baseAttributes: {
+                select: {
+                    value: true,
+                    attributes: {
+                        select: {
+                            name: true,
+                            description: true,
+                        }
+                    }
+                }},
             },
             where: params.search
                 ? {
