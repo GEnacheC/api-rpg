@@ -1,6 +1,7 @@
 import { AttributesCampaign } from "../../generated/prisma/browser";
 import { prisma } from "../database/prisma";
 import CreateCharacterDto from "../models/dtos/character.dto";
+import { UpdateCharacterData } from "../services/character.service";
 
 export default class CharacterRepository {
     public static async listCharacters(params: { page: number; limit: number; search?: string }) {
@@ -49,4 +50,11 @@ export default class CharacterRepository {
         });
         return character;
     }
+    
+    public static async updateCharacter(userId: string,characterId: string, updateData: UpdateCharacterData) {  
+        await prisma.character.update({
+            where: { id: characterId, userId: userId },
+            data: updateData
+        });
+    } 
 }

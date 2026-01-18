@@ -38,4 +38,30 @@ export default class CharacterController {
         await CharacterService.createCharacter(characterData);
         return res.status(201).json({ message: 'Character created successfully' });
     }
+
+    public static async updateCharacter(req: Request, res: Response) {
+        const userId = (req as any).user.userId;
+        const characterId = req.params.id as string;
+        if (!characterId) {
+            return res.status(400).json({ error: 'Character ID is required' });
+        }
+        if (!req.body) {
+            return res.status(400).json({ error: 'Request body is missing' });
+        }
+
+        const { name, surname, background } = req.body;
+
+        if (!name && !surname && !background) {
+            return res.status(400).json({ error: 'No valid fields to update' });
+        }
+
+        const updateData = {
+            ...(name && { name }),
+            ...(surname && { surname }),
+            ...(background && { background }),
+        };
+
+        await CharacterService.updateCharacter(userId, characterId, updateData);
+        return res.json({ message: 'Character updated successfully' });
+    }
 }

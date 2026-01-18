@@ -9,6 +9,12 @@ interface ListUsers{
   search?: string;
 }
 
+export interface UpdateCharacterData {
+  name?: string;
+  surname?: string;
+  background?: string;
+}
+
 export default class CharacterService {
     public static async listCharacters(params: ListUsers) {
         if (params.limit > 100) {
@@ -21,5 +27,9 @@ export default class CharacterService {
         const listAttr = await AttributeCampaignRepository.getAttributesByCampaign(characterData.getCampaignId());
         const character = await CharacterRepository.createCharacter(characterData, listAttr);
         await CampaignRepository.assignCharacterToCampaign(character.id, characterData.getCampaignId());
+    }
+
+    public static async updateCharacter(userId: string, characterId: string, updateData: UpdateCharacterData) {
+        await CharacterRepository.updateCharacter(userId, characterId, updateData);
     }
 }
