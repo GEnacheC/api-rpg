@@ -1,22 +1,23 @@
-export default class CharacterDto {
+export default class CreateCreateCharacterDto {
     private name: string
     private surname: string
     private background: string
     private userId: string
-    private xp: number = 0
+    private campaignId: string
 
-    constructor(name: string, surname: string, background: string, userId: string) {
+    constructor(name: string, surname: string, background: string, userId: string, campaignId: string) {
         this.name = name
         this.surname = surname
         this.background = background
         this.userId = userId
+        this.campaignId = campaignId
     }
 
     public getName = (): string => this.name
     public getSurname = (): string => this.surname
     public getBackground = (): string => this.background
     public getUserId = (): string => this.userId
-    public getXp = (): number => this.xp
+    public getCampaignId = (): string => this.campaignId
 
     public setName(name: string): void {
         this.name = name
@@ -26,8 +27,5 @@ export default class CharacterDto {
     }
     public setBackground(background: string): void {
         this.background = background
-    }
-    public setXp(xp: number): void {
-        this.xp = xp
     }
 }

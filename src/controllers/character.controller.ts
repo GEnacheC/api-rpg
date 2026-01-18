@@ -1,5 +1,5 @@
 import { type Request, type Response } from "express";
-import CharacterDto from "../models/dtos/character.dto";
+import CreateCharacterDto from "../models/dtos/character.dto";
 import CharacterService from "../services/character.service";
 
 export default class CharacterController {
@@ -28,12 +28,13 @@ export default class CharacterController {
         if (!req.body.surname) erros.push('Surname is required');
         if (!req.body.background) erros.push('Background is required');
         if (!userId) erros.push('User ID is required');
+        if (!req.body.campaignId) erros.push('Campaign ID is required');
 
         if (erros.length > 0) {
             return res.status(400).json({ errors: erros });
         }
 
-        const characterData = new CharacterDto(req.body.name, req.body.surname, req.body.background, userId);
+        const characterData = new CreateCharacterDto(req.body.name, req.body.surname, req.body.background, userId, req.body.campaignId);
         await CharacterService.createCharacter(characterData);
         return res.status(201).json({ message: 'Character created successfully' });
     }

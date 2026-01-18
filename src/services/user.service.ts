@@ -1,10 +1,10 @@
 import md5 from "md5";
 import jwt from "jsonwebtoken";
-import UserDto from "../models/dtos/user.dto";
+import CreateUserDto from "../models/dtos/user.dto";
 import UserRepository from "../repositories/user.repository";
 
 export default class UserService {
-    public static async createUser(userData: UserDto) {
+    public static async createUser(userData: CreateUserDto) {
         await UserRepository.createUser(userData);
     }
 

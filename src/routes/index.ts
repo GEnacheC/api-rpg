@@ -1,6 +1,8 @@
 import { Router } from "express";
 import protocolRoutes from "./protocol.routes";
 import characterRoutes from "./character.routes";
+import attributeRoutes from "./attribute.routes";
+import campaignRoutes from "./campaign.routes";
 import UserController from "../controllers/user.controller";
 import basicAuth from "../middlewares/basicauth.middleware";
 import bearerAuth from "../middlewares/bearerauth.middleware";
@@ -9,8 +11,10 @@ const router = Router();
 
 // rotas agrupadas
 router.use("/protocols", bearerAuth(), protocolRoutes);
-router.use("/users", bearerAuth(), protocolRoutes);
+// router.use("/users", bearerAuth(), protocolRoutes);
 router.use("/characters", bearerAuth(), characterRoutes);
+router.use("/attributes", bearerAuth(), attributeRoutes);
+router.use("/campaigns", bearerAuth(), campaignRoutes);
 
 router.post("/signup", basicAuth(), UserController.createUser);
 router.post("/signin", basicAuth(), UserController.loginUser);

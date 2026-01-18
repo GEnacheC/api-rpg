@@ -1,8 +1,8 @@
 import { prisma } from "../database/prisma";
-import UserDto from "../models/dtos/user.dto";
+import CreateUserDto from "../models/dtos/user.dto";
 
 export default class UserRepository {
-    public static async createUser(userData: UserDto) {
+    public static async createUser(userData: CreateUserDto) {
         const user = await prisma.user.create({
             data: {
                 username: userData.getUsername(),

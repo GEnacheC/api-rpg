@@ -53,6 +53,7 @@ model Campaign {
   master      String @db.VarChar(255)
   background  String
   characters  CampaignCharacter[]
+  attributes  AttributesCampaign[]
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
 }
@@ -83,8 +84,22 @@ model Attributes {
   description     String
   baseAttributes  CharacterBaseAttributes[]
   attributes      CharacterAttributes[]
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  campaigns       AttributesCampaign[]
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+}
+
+model AttributesCampaign {
+  attribute   Attributes  @relation(fields: [attrId], references: [id])
+  attrId      String      @db.Uuid
+  campaign    Campaign    @relation(fields: [campaignId], references: [id])
+  campaignId  String      @db.Uuid
+  value       Int?      
+  status      Boolean     @default(true)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  @@id([attrId, campaignId])
 }
 
 model CharacterBaseAttributes {

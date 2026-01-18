@@ -1,4 +1,6 @@
-import CharacterDto from "../models/dtos/character.dto";
+import CreateCharacterDto from "../models/dtos/character.dto";
+import AttributeCampaignRepository from "../repositories/attributeCampaign.repository";
+import CampaignRepository from "../repositories/campaign.repository";
 import CharacterRepository from "../repositories/character.repository";
 
 interface ListUsers{
@@ -15,7 +17,9 @@ export default class CharacterService {
         return await CharacterRepository.listCharacters(params);
     }
 
-    public static async createCharacter(characterData: CharacterDto) {
-        await CharacterRepository.createCharacter(characterData);
+    public static async createCharacter(characterData: CreateCharacterDto) {
+        const listAttr = await AttributeCampaignRepository.getAttributesByCampaign(characterData.getCampaignId());
+        const character = await CharacterRepository.createCharacter(characterData, listAttr);
+        await CampaignRepository.assignCharacterToCampaign(character.id, characterData.getCampaignId());
     }
 }

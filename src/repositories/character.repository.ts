@@ -1,5 +1,6 @@
+import { AttributesCampaign } from "../../generated/prisma/browser";
 import { prisma } from "../database/prisma";
-import CharacterDto from "../models/dtos/character.dto";
+import CreateCharacterDto from "../models/dtos/character.dto";
 
 export default class CharacterRepository {
     public static async listCharacters(params: { page: number; limit: number; search?: string }) {
@@ -23,13 +24,27 @@ export default class CharacterRepository {
         return characters
     }
 
-    public static async createCharacter(characterData: CharacterDto) {
+    public static async createCharacter(characterData: CreateCharacterDto, listAttr: AttributesCampaign[]) {
         const character = await prisma.character.create({
             data: {
                 name: characterData.getName(),
                 surname: characterData.getSurname(),
                 background: characterData.getBackground(),
-                userId: characterData.getUserId()
+                userId: characterData.getUserId(),
+
+                baseAttributes: {
+                    create: listAttr.map(a => ({
+                        attrId: a.attrId,
+                        value: a.value ?? 0,
+                    }))
+                },
+                
+                attributes: {
+                    create: listAttr.map(a => ({
+                        attrId: a.attrId,
+                        value: 1,
+                    }))
+                }
             }
         });
         return character;
