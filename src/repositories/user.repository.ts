@@ -1,9 +1,9 @@
-import { prisma } from "../database/prisma";
+import BaseRepository from "../common/repository/baseRepository.repository";
 import CreateUserDto from "../models/dtos/user.dto";
 
-export default class UserRepository {
-    public static async createUser(userData: CreateUserDto) {
-        const user = await prisma.user.create({
+export default class UserRepository extends BaseRepository {
+    public async createUser(userData: CreateUserDto) {
+        const user = await this.epc().user.create({
             data: {
                 username: userData.getUsername(),
                 password: userData.getPassword(),
@@ -13,8 +13,8 @@ export default class UserRepository {
         return user;
     }
 
-    public static async getUserByUsername(username: string) {
-        const user = await prisma.user.findFirst({
+    public async getUserByUsername(username: string) {
+        const user = await this.epc().user.findFirst({
             where: {
                 username: username
             }

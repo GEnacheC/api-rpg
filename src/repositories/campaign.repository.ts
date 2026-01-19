@@ -1,9 +1,14 @@
-import { prisma } from "../database/prisma";
+import BaseRepository from "../common/repository/baseRepository.repository";
 import CreateCampaignDto from "../models/dtos/campaign.dto";
 
-export default class CampaignRepository {
-    public static async createCampaign(campaignData: CreateCampaignDto) {
-        const campaign = await prisma.campaign.create({
+export default class CampaignRepository extends BaseRepository {
+
+    constructor() {
+        super();
+    }   
+
+    public async createCampaign(campaignData: CreateCampaignDto) {
+        const campaign = await this.epc().campaign.create({
             data: {
                 name: campaignData.getName(),
                 master: campaignData.getMaster(),
@@ -13,8 +18,8 @@ export default class CampaignRepository {
         return campaign;
     }
 
-    public static async assignCharacterToCampaign(characterId: string, campaignId: string) {
-        const campaignCharacter = await prisma.campaignCharacter.create({
+    public async assignCharacterToCampaign(characterId: string, campaignId: string) {
+        const campaignCharacter = await this.epc().campaignCharacter.create({
             data: {
                 charId: characterId,
                 campaignId: campaignId,

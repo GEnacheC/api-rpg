@@ -2,11 +2,10 @@ import { Router } from "express";
 import AttributeController from "../controllers/attribute.controller";
 
 const router = Router();
-
-// router.get()
+const controller = new AttributeController();
 
 router.post("/", async (req, res) => {
-    await AttributeController.createAttribute(req, res);
+    await controller.createAttribute(req, res);
 });
 
 export default router;
