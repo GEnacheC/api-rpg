@@ -1,12 +1,23 @@
-import { type Response } from 'express';
+import { type Request, type Response } from 'express';
 import ProtocolService from '../services/protocol.service';
+import BaseController from '../common/controller/baseController.controller';
+import CreateProtocolValidator from '../validators/protocol/createProtocolValidator.validator';
 
 
-export default class ProtocolController {
-    public static async createProtocol(res: Response) {
-        await ProtocolService.createProtocol();
+export default class ProtocolController extends BaseController {
+    private service: ProtocolService;
 
-        // try/catch?
-        res.status(201).json({ message: "Protocol created successfully!" });
+    constructor() {
+        super();
+        this.service = new ProtocolService();
+    }
+
+    public async createProtocol(req: Request, res: Response) {
+        new CreateProtocolValidator().check(req);   
+
+
+        await this.service.createProtocol();
+
+        return this.ReturnCreatedWithoutData(res);
     }
 }

@@ -1,11 +1,16 @@
 import { AttributesCampaign } from "../../generated/prisma/browser";
-import { prisma } from "../database/prisma";
+import BaseRepository from "../common/repository/baseRepository.repository";
 import CreateCharacterDto from "../models/dtos/character.dto";
 import { UpdateCharacterData } from "../services/character.service";
 
-export default class CharacterRepository {
-    public static async listCharacters(params: { page: number; limit: number; search?: string }) {
-        const characters = await prisma.character.findMany({
+export default class CharacterRepository extends BaseRepository {
+
+    constructor() {
+        super();
+    }
+
+    public async listCharacters(params: { page: number; limit: number; search?: string }) {
+        const characters = await this.epc().character.findMany({
             skip: (params.page - 1) * params.limit,
             take: params.limit,
             select: {
@@ -48,8 +53,8 @@ export default class CharacterRepository {
         return characters
     }
 
-    public static async createCharacter(characterData: CreateCharacterDto, listAttr: AttributesCampaign[]) {
-        const character = await prisma.character.create({
+    public async createCharacter(characterData: CreateCharacterDto, listAttr: AttributesCampaign[]) {
+        const character = await this.epc().character.create({
             data: {
                 name: characterData.getName(),
                 surname: characterData.getSurname(),
@@ -74,8 +79,8 @@ export default class CharacterRepository {
         return character;
     }
     
-    public static async updateCharacter(userId: string,characterId: string, updateData: UpdateCharacterData) {  
-        await prisma.character.update({
+    public async updateCharacter(userId: string,characterId: string, updateData: UpdateCharacterData) {  
+        await this.epc().character.update({
             where: { id: characterId, userId: userId },
             data: updateData
         });

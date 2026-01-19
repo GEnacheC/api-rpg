@@ -1,24 +1,23 @@
 import { type Request, type Response } from 'express';
 import CreateCampaignDto from '../models/dtos/campaign.dto';
 import CampaignService from '../services/campaign.service';
+import BaseController from '../common/controller/baseController.controller';
+import CreateCampaignValidator from '../validators/campaign/createCampaignValidator.validator';
 
-export default class CampaignController {
-    public static async createCampaign(req: Request, res: Response) {
-        if (!req.body) {
-            return res.status(400).json({ error: 'Request body is missing' });
-        }
+export default class CampaignController extends BaseController {
 
-        const errors = []
-        if (!req.body.name) errors.push('Name is required');
-        if (!req.body.master) errors.push('Master is required');
-        if (!req.body.background) errors.push('Background is required');
+    private service: CampaignService;
 
-        if (errors.length > 0) {
-            return res.status(400).json({ errors: errors });
-        }
+    constructor() {
+        super();
+        this.service = new CampaignService();
+    }
+
+    public async createCampaign(req: Request, res: Response) {
+        new CreateCampaignValidator().check(req);
 
         const campaignData = new CreateCampaignDto(req.body.name, req.body.master, req.body.background);
-        await CampaignService.createCampaign(campaignData);
-        return res.status(201).json({ message: 'Campaign created successfully' });
+        await this.service.createCampaign(campaignData);
+        return this.ReturnCreatedWithoutData(res);
     }
 }
