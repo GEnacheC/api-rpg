@@ -9,13 +9,15 @@ export default class CharacterRepository {
             skip: (params.page - 1) * params.limit,
             take: params.limit,
             select: {
+                id: true,
                 name: true,
                 surname: true,
                 background: true,
                 attributes: {
                 select: {
+                    attrId: true,
                     value: true,
-                    attributes: {
+                    attribute: {
                         select: {
                             name: true,
                             description: true,
@@ -24,8 +26,9 @@ export default class CharacterRepository {
                 }},
                 baseAttributes: {
                 select: {
+                    attrId: true,
                     value: true,
-                    attributes: {
+                    attribute: {
                         select: {
                             name: true,
                             description: true,

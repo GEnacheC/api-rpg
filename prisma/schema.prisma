@@ -18,17 +18,19 @@ model User {
   id          String    @id @default(uuid()) @db.Uuid
   username    String    @unique
   password    String
-  protocol    Protocol  @relation(fields: [protocolId], references: [id])
   protocolId  String    @unique @db.Uuid
-  character   Character[]
   status      Boolean   @default(true)
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
+  
+  character   Character[]
+  protocol    Protocol  @relation(fields: [protocolId], references: [id])
 }
 
 model Protocol {
   id          String    @id @default(uuid()) @db.Uuid
   createdAt   DateTime  @default(now())
+
   user        User?
 }
 
@@ -42,6 +44,7 @@ model Character {
   background      String
   createdAt       DateTime   @default(now())
   updatedAt       DateTime   @updatedAt
+
   campaigns       CampaignCharacter[]
   baseAttributes  CharacterBaseAttributes[]
   attributes      CharacterAttributes[]
@@ -52,10 +55,11 @@ model Campaign {
   name        String @db.VarChar(80)
   master      String @db.VarChar(255)
   background  String
-  characters  CampaignCharacter[]
-  attributes  AttributesCampaign[]
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
+  
+  characters  CampaignCharacter[]
+  attributes  AttributesCampaign[]
 }
 
 model ClassRpg {
@@ -67,14 +71,14 @@ model ClassRpg {
 }
 
 model CampaignCharacter {
-  character   Character @relation(fields: [charId], references: [id])
   charId      String    @db.Uuid
-  campaign    Campaign  @relation(fields: [campaignId], references: [id])
   campaignId  String    @db.Uuid
   finalDesc   String
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
 
+  character   Character @relation(fields: [charId], references: [id])
+  campaign    Campaign  @relation(fields: [campaignId], references: [id])
   @@id([charId, campaignId])
 }
 
@@ -82,46 +86,47 @@ model Attributes {
   id              String @id @default(uuid()) @db.Uuid
   name            String @db.VarChar(80)
   description     String
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  
   baseAttributes  CharacterBaseAttributes[]
   attributes      CharacterAttributes[]
   campaigns       AttributesCampaign[]
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
 }
 
 model AttributesCampaign {
-  attribute   Attributes  @relation(fields: [attrId], references: [id])
   attrId      String      @db.Uuid
-  campaign    Campaign    @relation(fields: [campaignId], references: [id])
   campaignId  String      @db.Uuid
   value       Int?      
   status      Boolean     @default(true)
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
 
+  attribute   Attributes  @relation(fields: [attrId], references: [id])
+  campaign    Campaign    @relation(fields: [campaignId], references: [id])
   @@id([attrId, campaignId])
 }
 
 model CharacterBaseAttributes {
-  character   Character   @relation(fields: [charId], references: [id])
   charId      String      @db.Uuid
-  attributes  Attributes  @relation(fields: [attrId], references: [id])
   attrId      String      @db.Uuid
   value       Int
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
 
+  character   Character   @relation(fields: [charId], references: [id])
+  attribute   Attributes  @relation(fields: [attrId], references: [id])
   @@id([charId, attrId])
 }
 
 model CharacterAttributes {
-  character   Character   @relation(fields: [charId], references: [id])
   charId      String      @db.Uuid
-  attributes  Attributes  @relation(fields: [attrId], references: [id])
   attrId      String      @db.Uuid
   value       Int
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
 
+  character   Character   @relation(fields: [charId], references: [id])
+  attribute   Attributes  @relation(fields: [attrId], references: [id])
   @@id([charId, attrId])
 }
