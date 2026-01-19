@@ -11,7 +11,7 @@ router.post("/", async (req, res) => {
     await CharacterController.createCharacter(req, res);
 });
 
-router.put("/:id", async (req, res) => {
+router.patch("/:id", async (req, res) => {
     await CharacterController.updateCharacter(req, res);
 });
 
