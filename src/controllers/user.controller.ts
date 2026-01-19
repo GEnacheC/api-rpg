@@ -1,5 +1,5 @@
 import { type Request, type Response } from 'express';
-import UserDto from '../models/dtos/user.dto';
+import CreateUserDto from '../models/dtos/user.dto';
 import UserService from '../services/user.service';
 
 export default class UserController {
@@ -16,7 +16,7 @@ export default class UserController {
             return res.status(400).json({ errors: errors });
         }
 
-        const userData = new UserDto(req.body.username, req.body.password, req.headers['protocol'] as string);
+        const userData = new CreateUserDto(req.body.username, req.body.password, req.headers['protocol'] as string);
         await UserService.createUser(userData);
         return res.status(201).json({ message: 'User created successfully' });
     }

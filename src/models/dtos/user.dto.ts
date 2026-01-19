@@ -1,6 +1,6 @@
 import md5 from "md5";
 
-export default class UserDto {
+export default class CreateCreateUserDto {
     private username: string;
     private password: string;
     private protocol: string;
